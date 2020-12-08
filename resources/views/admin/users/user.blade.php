@@ -87,4 +87,23 @@
         {!! Form::submit('Edit', ['class' => 'btn btn-primary']) !!}
     </div>
 {!! Form::close() !!}
+
+<h3>Logged IPs</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+          <th scope="col">IP</th>
+          <th scope="col">Stored At</th>
+        </tr>
+      </thead>
+    <tbody>
+        @foreach($user->ips as $ip)
+            <tr>
+                <td>{{ $ip->ip }}</td>
+                <td>{{ $ip->created_at }}</td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
 @endsection
