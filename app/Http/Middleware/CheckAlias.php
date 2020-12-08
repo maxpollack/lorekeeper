@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Carbon;
 use App\Models\User\UserIp;
 
 class CheckAlias
@@ -35,6 +36,7 @@ class CheckAlias
             UserIp::create([
                 'user_id' => $user->id,
                 'ip' => $ip,
+                'created_at' => Carbon::now(),
             ]);
         }
 
