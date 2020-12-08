@@ -18,7 +18,7 @@ class AddIpTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('ip');
-            $table->timestamp('created_at');
+            $table->timestamp('created_at')->nullable();
         });
     }
 
