@@ -13,7 +13,7 @@ class UserIp extends Model
      * @var array
      */
     protected $fillable = [
-        'ip', 'user_id'
+        'ip', 'user_id',
     ];
 
     /**
@@ -22,6 +22,13 @@ class UserIp extends Model
      * @var string
      */
     protected $table = 'user_ips';
+
+    /**
+     * Whether the model contains timestamps to be saved and updated.
+     *
+     * @var string
+     */
+    public $timestamps = true;
 
     /**********************************************************************************************
     

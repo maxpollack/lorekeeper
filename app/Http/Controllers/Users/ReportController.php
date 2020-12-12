@@ -7,7 +7,10 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use Settings;
+use Carbon\Carbon;
+
 use App\Models\User\User;
+use App\Models\User\UserIp;
 use App\Models\Character\Character;
 use App\Models\Item\Item;
 use App\Models\Currency\Currency;
@@ -105,6 +108,23 @@ class ReportController extends Controller
     public function postNewReport(Request $request, ReportManager $service)
     {
         $request->validate(Report::$createRules);
+        
+        $ip = $request->ip();
+        $query = UserIp::where('user_id', Auth::user()->id)->where('ip', $ip)->first();
+
+        if($query)
+        {
+            $query->updated_at = Carbon::now();
+            $query->save();
+        }
+        else {
+            UserIp::create([
+                'user_id' => Auth::user()->id,
+                'ip' => $ip,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        }
 
         if($service->createReport($request->only(['url', 'comments', 'is_br', 'error']), Auth::user(), true)) {
             flash('Report submitted successfully.')->success();

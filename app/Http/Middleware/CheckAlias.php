@@ -25,21 +25,6 @@ class CheckAlias
             return redirect('/banned');
         }
 
-        $user = $request->user();
-        $ip = $request->ip();
-
-        if(UserIp::where('user_id', $user->id)->where('ip', $ip)->exists())
-        {
-
-        }
-        else {
-            UserIp::create([
-                'user_id' => $user->id,
-                'ip' => $ip,
-                'created_at' => Carbon::now(),
-            ]);
-        }
-
         return $next($request);
     }
 }

@@ -95,13 +95,21 @@
         <tr>
           <th scope="col">IP</th>
           <th scope="col">Stored At</th>
+          <th scope="col">Last Used At</th>
+          <th scope="col">Users with same IP</th>
         </tr>
       </thead>
     <tbody>
         @foreach($user->ips as $ip)
             <tr>
                 <td>{{ $ip->ip }}</td>
-                <td>{{ $ip->created_at }}</td>
+                <td>{!! format_date($ip->created_at) !!}</td>
+                <td>{!! pretty_date($ip->updated_at) !!}</td>
+                <td>
+                    @foreach($matching as $match)
+                        <a href="{{ $match->user->url }}">{{ $match->user->name }}</a>
+                    @endforeach
+                </td>
             </tr>
         @endforeach
     </tbody>

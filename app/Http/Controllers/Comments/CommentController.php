@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Comments;
 
 use Illuminate\Http\Request;
+
 use Settings;
+use Carbon\Carbon;
+
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Honeypot\ProtectAgainstSpam;
@@ -19,6 +22,7 @@ use App\Models\User\User;
 use App\Models\News;
 use App\Models\Report\Report;
 use App\Models\SitePage;
+use App\Models\User\UserIp;
 
 use Notifications;
 
@@ -120,6 +124,22 @@ class CommentController extends Controller implements CommentControllerInterface
                 break;  
             } 
 
+            $ip = $request->ip();
+            $query = UserIp::where('user_id', $sender->id)->where('ip', $ip)->first();
+    
+            if($query)
+            {
+                $query->updated_at = Carbon::now();
+                $query->save();
+            }
+            else {
+                UserIp::create([
+                    'user_id' => $sender->id,
+                    'ip' => $ip,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
+            }
 
         if($recipient != $sender) {
             Notifications::create('COMMENT_MADE', $recipient, [

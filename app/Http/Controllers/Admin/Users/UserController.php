@@ -10,6 +10,7 @@ use Carbon\Carbon;
 
 use App\Models\User\User;
 use App\Models\Rank\Rank;
+use App\Models\User\UserIp;
 use App\Models\User\UserUpdateLog;
 
 use App\Services\UserService;
@@ -75,12 +76,18 @@ class UserController extends Controller
     public function getUser($name)
     {
         $user = User::where('name', $name)->first();
+        $matching = collect([]);
+        foreach($user->ips as $ip) {
+            $query = UserIp::where('ip', $ip->ip)->where('user_id', '!=', $user->id)->first();
+            $matching->push($query);
+        }
 
         if(!$user) abort(404);
 
         return view('admin.users.user', [
             'user' => $user,
-            'ranks' => Rank::orderBy('ranks.sort')->pluck('name', 'id')->toArray()
+            'matching' => $matching,
+            'ranks' => Rank::orderBy('ranks.sort')->pluck('name', 'id')->toArray(),
         ]);
     }
 

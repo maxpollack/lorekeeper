@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Users;
 use Auth;
 use File;
 use Image;
+use Carbon\Carbon;
 
 use App\Models\User\User;
+use App\Models\User\UserIp;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -45,8 +47,25 @@ class AccountController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function getSettings()
+    public function getSettings(Request $request)
     {
+        $ip = $request->ip();
+        $query = UserIp::where('user_id', Auth::user()->id)->where('ip', $ip)->first();
+
+        if($query)
+        {
+            $query->updated_at = Carbon::now();
+            $query->save();
+        }
+        else {
+            UserIp::create([
+                'user_id' => Auth::user()->id,
+                'ip' => $ip,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        }
+
         return view('account.settings');
     }
     
