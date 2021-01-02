@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use DB;
 use Auth;
+use Carbon\Carbon;
+
 use App\Models\User\User;
 use App\Models\User\UserItem;
 use App\Models\Item\Item;
@@ -16,6 +18,8 @@ use App\Models\Character\CharacterItem;
 use App\Services\InventoryManager;
 
 use App\Http\Controllers\Controller;
+
+use App\Models\User\UserIp;
 
 class InventoryController extends Controller
 {
@@ -125,6 +129,24 @@ class InventoryController extends Controller
         if(!$request->ids) { flash('No items selected.')->error(); }
         if(!$request->quantities) { flash('Quantities not set.')->error(); }
         
+        // IP
+        $ip = $request->ip();
+        $query = UserIp::where('user_id', Auth::user()->id)->where('ip', $ip)->first();
+    
+        if($query)
+        {
+            $query->updated_at = Carbon::now();
+            $query->save();
+        }
+        else {
+            UserIp::create([
+                'user_id' => Auth::user()->id,
+                'ip' => $ip,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        }
+
         if($request->ids && $request->quantities) {
             switch($request->action) {
                 default:
