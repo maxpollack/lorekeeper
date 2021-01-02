@@ -107,7 +107,9 @@
                 <td>{!! pretty_date($ip->updated_at) !!}</td>
                 <td>
                     @foreach($matching as $match)
-                        <a href="{{ $match->user->url }}">{{ $match->user->name }}</a>
+                        @if($match != NULL)
+                            <a href="{{ $match->user->url }}">{{ $match->user->name }}</a>
+                        @endif
                     @endforeach
                 </td>
             </tr>
