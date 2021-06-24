@@ -24,7 +24,7 @@ use App\Http\Controllers\Controller;
 class ReportController extends Controller
 {
     /**********************************************************************************************
-    
+
         REPORTS
 
     **********************************************************************************************/
@@ -40,7 +40,7 @@ class ReportController extends Controller
         $reports = Report::where('user_id', Auth::user()->id);
         $type = $request->get('type');
         if(!$type) $type = 'Pending';
-        
+
         $reports = $reports->where('status', ucfirst($type));
 
         return view('home.reports', [
@@ -59,15 +59,15 @@ class ReportController extends Controller
         $reports = Report::where('is_br', 1);
 
         $data = $request->only(['url']);
-        
-        if(isset($data['url'])) 
+
+        if(isset($data['url']))
             $reports->where('url', 'LIKE', '%'.$data['url'].'%');
 
         return view('home.bug_report_index', [
             'reports' => $reports->orderBy('id', 'DESC')->paginate(20)->appends($request->query()),
         ]);
     }
-    
+
     /**
      * Shows the report page.
      *
@@ -76,14 +76,14 @@ class ReportController extends Controller
      */
     public function getReport($id)
     {
-        $report = Report::viewable(Auth::user())->where('id', $id)->first();
+        $report = Report::viewable(Auth::check() ? Auth::user() : null)->where('id', $id)->first();
         if(!$report) abort(404);
         return view('home.report', [
             'report' => $report,
             'user' => $report->user
         ]);
     }
-    
+
     /**
      * Shows the submit report page.
      *
@@ -97,7 +97,7 @@ class ReportController extends Controller
             'closed' => $closed,
         ]);
     }
-    
+
     /**
      * Creates a new report.
      *
@@ -125,6 +125,8 @@ class ReportController extends Controller
                 'updated_at' => Carbon::now(),
             ]);
         }
+        
+        $request['url'] = strip_tags($request['url']);
 
         if($service->createReport($request->only(['url', 'comments', 'is_br', 'error']), Auth::user(), true)) {
             flash('Report submitted successfully.')->success();

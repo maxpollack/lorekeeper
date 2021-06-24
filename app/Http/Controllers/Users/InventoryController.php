@@ -17,6 +17,10 @@ use App\Models\Character\Character;
 use App\Models\Character\CharacterItem;
 use App\Services\InventoryManager;
 
+use App\Models\Trade;
+use App\Models\Character\CharacterDesignUpdate;
+use App\Models\Submission\Submission;
+
 use App\Http\Controllers\Controller;
 
 use App\Models\User\UserIp;
@@ -40,7 +44,7 @@ class InventoryController extends Controller
     public function getIndex()
     {
         $categories = ItemCategory::orderBy('sort', 'DESC')->get();
-        $items = count($categories) ? 
+        $items = count($categories) ?
             Auth::user()->items()
                 ->where('count', '>', 0)
                 ->orderByRaw('FIELD(item_category_id,'.implode(',', $categories->pluck('id')->toArray()).')')
@@ -48,7 +52,7 @@ class InventoryController extends Controller
                 ->orderBy('updated_at')
                 ->get()
                 ->groupBy(['item_category_id', 'id']) :
-            Auth::user()->items() 
+            Auth::user()->items()
                 ->where('count', '>', 0)
                 ->orderBy('name')
                 ->orderBy('updated_at')
@@ -160,6 +164,7 @@ class InventoryController extends Controller
                     break;
                 case 'characterTransfer':
                     return $this->postTransferToCharacter($request, $service);
+                    break;
                 case 'resell':
                     return $this->postResell($request, $service);
                     break;
@@ -170,7 +175,7 @@ class InventoryController extends Controller
         }
         return redirect()->back();
     }
-    
+
     /**
      * Transfers inventory items to another user.
      *
@@ -206,7 +211,7 @@ class InventoryController extends Controller
         }
         return redirect()->back();
     }
-    
+
     /**
      * Deletes an inventory stack.
      *
@@ -255,7 +260,7 @@ class InventoryController extends Controller
             'user' => Auth::user(),
         ]);
     }
-    
+
     /**
      * Acts on an item based on the item's tag.
      *
@@ -275,5 +280,41 @@ class InventoryController extends Controller
             foreach($service->errors()->getMessages()['error'] as $error) flash($error)->error();
         }
         return redirect()->back();
+    }
+
+    /**
+     * Show the account search page.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getAccountSearch(Request $request)
+    {
+        $item = Item::released()->find($request->only(['item_id']))->first();
+        $user = Auth::user();
+
+        if($item) {
+            // Gather all instances of this item in the user's inventory
+            $userItems = UserItem::where('user_id', $user->id)->where('item_id', $item->id)->where('count', '>', 0)->get();
+
+            // Gather the user's characters and the items they own
+            $characters = Character::where('user_id', $user->id)->orderBy('slug', 'ASC')->get();
+            $characterItems = CharacterItem::whereIn('character_id', $characters->pluck('id')->toArray())->where('item_id', $item->id)->where('count', '>', 0)->get();
+
+            // Gather hold locations
+            $designUpdates = CharacterDesignUpdate::where('user_id', $user->id)->whereNotNull('data')->get();
+            $trades = Trade::where('sender_id', $user->id)->orWhere('recipient_id', $user->id)->get();
+            $submissions = Submission::where('user_id', $user->id)->whereNotNull('data')->get();
+        }
+
+        return view('home.account_search', [
+            'item' => $item ? $item : null,
+            'items' => Item::orderBy('name')->released()->pluck('name', 'id'),
+            'userItems' => $item ? $userItems : null,
+            'characterItems' => $item ? $characterItems : null,
+            'characters' => $item ? $characters : null,
+            'designUpdates' => $item ? $designUpdates :null,
+            'trades' => $item ? $trades : null,
+            'submissions' => $item ? $submissions : null,
+        ]);
     }
 }
