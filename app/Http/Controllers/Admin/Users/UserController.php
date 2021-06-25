@@ -80,7 +80,7 @@ class UserController extends Controller
         $user = User::where('name', $name)->first();
         $matching = collect([]);
         foreach($user->ips as $ip) {
-            $query = UserIp::where('ip', $ip->ip)->where('user_id', '!=', $user->id)->first();
+            $query = UserIp::where('ip', $ip->ip)->where('user_id', '!=', $user->id)->get();
             $matching->push($query);
         }
 
