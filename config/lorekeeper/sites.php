@@ -43,8 +43,8 @@ return [
         'regex' => '/twitter\.com\/([A-Za-z0-9_-]+)/',
         'link' => 'twitter.com',
         'icon' => 'fab fa-twitter',
-        'auth' => 0,
-        'primary_alias' => 0
+        'auth' => 1,
+        'primary_alias' => 1
     ],
 
     'instagram' => [

@@ -20,12 +20,12 @@ return [
     | Version
     |--------------------------------------------------------------------------
     |
-    | This is the current version of Lorekeeper that your site is on. 
+    | This is the current version of Lorekeeper that your site is on.
     | Do not change this value!
     |
     */
     'version' => '2.0.0',
-    
+
     /*
     |--------------------------------------------------------------------------
     | Site Name
@@ -36,7 +36,7 @@ return [
     | site wherever the name needs to be displayed.
     |
     */
-    'site_name' => 'Lorekeeper',
+    'site_name' => 'Xeros',
 
     /*
     |--------------------------------------------------------------------------
@@ -136,10 +136,10 @@ return [
     | 'masterlist_image_background' => 'png',
     |
     */
-    'watermark_masterlist_images' => 0,
+    'watermark_masterlist_images' => 1,
     'masterlist_image_dimension' => 0,
     'masterlist_image_format' => null,
-    'masterlist_image_background' => '#ffffff',
+    'masterlist_image_background' => '#4e5050',
 
     /*
     |--------------------------------------------------------------------------
