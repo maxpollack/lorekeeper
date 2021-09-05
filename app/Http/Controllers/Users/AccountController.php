@@ -51,23 +51,6 @@ class AccountController extends Controller
      */
     public function getSettings(Request $request)
     {
-        $ip = $request->ip();
-        $query = UserIp::where('user_id', Auth::user()->id)->where('ip', $ip)->first();
-
-        if($query)
-        {
-            $query->updated_at = Carbon::now();
-            $query->save();
-        }
-        else {
-            UserIp::create([
-                'user_id' => Auth::user()->id,
-                'ip' => $ip,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ]);
-        }
-
         return view('account.settings');
     }
     

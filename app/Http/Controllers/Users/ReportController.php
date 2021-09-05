@@ -109,23 +109,6 @@ class ReportController extends Controller
     {
         $request->validate(Report::$createRules);
         
-        $ip = $request->ip();
-        $query = UserIp::where('user_id', Auth::user()->id)->where('ip', $ip)->first();
-
-        if($query)
-        {
-            $query->updated_at = Carbon::now();
-            $query->save();
-        }
-        else {
-            UserIp::create([
-                'user_id' => Auth::user()->id,
-                'ip' => $ip,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ]);
-        }
-        
         $request['url'] = strip_tags($request['url']);
 
         if($service->createReport($request->only(['url', 'comments', 'is_br', 'error']), Auth::user(), true)) {

@@ -132,24 +132,6 @@ class InventoryController extends Controller
     {
         if(!$request->ids) { flash('No items selected.')->error(); }
         if(!$request->quantities) { flash('Quantities not set.')->error(); }
-        
-        // IP
-        $ip = $request->ip();
-        $query = UserIp::where('user_id', Auth::user()->id)->where('ip', $ip)->first();
-    
-        if($query)
-        {
-            $query->updated_at = Carbon::now();
-            $query->save();
-        }
-        else {
-            UserIp::create([
-                'user_id' => Auth::user()->id,
-                'ip' => $ip,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ]);
-        }
 
         if($request->ids && $request->quantities) {
             switch($request->action) {

@@ -281,3 +281,29 @@ function prettyProfileName($url)
     if(isset($name) && isset($site)) return $name.'@'.(Config::get('lorekeeper.sites.'.$site.'.display_name') != null ? Config::get('lorekeeper.sites.'.$site.'.display_name') : $site);
     else return $url;
 }
+
+/**
+ * Stores a user's IP
+ * 
+ * @param string $ip
+ * @param App\Models\User\User $user
+ * @return void
+ */
+function storeIp($ip, $id)
+{
+    $query = \App\Models\User\UserIp::where('user_id', $id)->where('ip', $ip)->first();
+    
+    if($query)
+    {
+        $query->updated_at = Carbon\Carbon::now();
+        $query->save();
+    }
+    else {
+        \App\Models\User\UserIp::create([
+            'user_id' => $id,
+            'ip' => $ip,
+            'created_at' => Carbon\Carbon::now(),
+            'updated_at' => Carbon\Carbon::now(),
+        ]);
+    }
+}

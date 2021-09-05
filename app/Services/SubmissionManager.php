@@ -42,7 +42,7 @@ class SubmissionManager extends Service
      * @param  bool                   $isClaim
      * @return mixed
      */
-    public function createSubmission($data, $user, $ip, $isClaim = false)
+    public function createSubmission($data, $user, $isClaim = false)
     {
         DB::beginTransaction();
 
@@ -59,24 +59,7 @@ class SubmissionManager extends Service
                 if(!$prompt) throw new \Exception("Invalid prompt selected.");
             }
             else $prompt = null;
-
-            // IP check
-            $query = UserIp::where('user_id', $user->id)->where('ip', $ip)->first();
-    
-            if($query)
-            {
-                $query->updated_at = Carbon::now();
-                $query->save();
-            }
-            else {
-                UserIp::create([
-                    'user_id' => $user->id,
-                    'ip' => $ip,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ]);
-            }
-
+            
             // The character identification comes in both the slug field and as character IDs
             // that key the reward ID/quantity arrays.
             // We'll need to match characters to the rewards for them.

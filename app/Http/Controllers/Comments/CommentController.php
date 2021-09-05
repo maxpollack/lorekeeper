@@ -134,23 +134,6 @@ class CommentController extends Controller implements CommentControllerInterface
                 break;
             }
 
-            $ip = $request->ip();
-            $query = UserIp::where('user_id', $sender->id)->where('ip', $ip)->first();
-    
-            if($query)
-            {
-                $query->updated_at = Carbon::now();
-                $query->save();
-            }
-            else {
-                UserIp::create([
-                    'user_id' => $sender->id,
-                    'ip' => $ip,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ]);
-            }
-
         if($recipient != $sender) {
             Notifications::create('COMMENT_MADE', $recipient, [
                 'comment_url' => $link,

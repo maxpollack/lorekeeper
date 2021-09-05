@@ -31,7 +31,7 @@ class ShopManager extends Service
      * @param  \App\Models\User\User $user
      * @return bool|App\Models\Shop\Shop
      */
-    public function buyStock($data, $user, $ip)
+    public function buyStock($data, $user)
     {
         DB::beginTransaction();
 
@@ -54,23 +54,6 @@ class ShopManager extends Service
             if($shopStock->purchase_limit && $this->checkPurchaseLimitReached($shopStock, $user)) throw new \Exception("You have already purchased the maximum amount of this item you can buy.");
 
             $total_cost = $shopStock->cost * $quantity;
-
-            // IP
-            $query = UserIp::where('user_id', $user->id)->where('ip', $ip)->first();
-    
-            if($query)
-            {
-                $query->updated_at = Carbon::now();
-                $query->save();
-            }
-            else {
-                UserIp::create([
-                    'user_id' => $user->id,
-                    'ip' => $ip,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ]);
-            }
 
             $character = null;
             if($data['bank'] == 'character')
