@@ -116,7 +116,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="dropdown-item" href="{{ url('prompts/prompts') }}">Prompts</a>
+                    <a class="nav-link" href="{{ url('prompts/prompts') }}">Prompts</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('gallery') }}">Gallery</a>
