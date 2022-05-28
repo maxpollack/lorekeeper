@@ -109,13 +109,14 @@
                         <a class="dropdown-item" href="{{ url('world/info') }}">
                             World Expanded
                         </a>
-                        <a class="dropdown-item" href="{{ url('prompts/prompts') }}">
-                            Prompts
-                        </a>
+
                         <a class="dropdown-item" href="{{ url('shops') }}">
                             Shops
                         </a>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a class="dropdown-item" href="{{ url('prompts/prompts') }}">Prompts</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('gallery') }}">Gallery</a>
