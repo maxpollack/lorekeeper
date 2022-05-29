@@ -134,6 +134,8 @@
                 $prompt.on('change', function(e) {
                     $rewards.load('{{ url('submissions/new/prompt') }}/'+$(this).val());
                 });
+
+                $rewards.load('{{ url('submissions/new/prompt') }}/'+$(this).val());
             @endif
 
             $submitButton.on('click', function(e) {

@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-body">
         <h4>Default Prompt Rewards</h4>
-        @if(isset($staffView) && $staffView && false)
+        @if(isset($staffView) && $staffView)
             <p>For reference, these are the default rewards for this prompt. The editable section above is <u>inclusive</u> of these rewards.</p>
             @if($count['all'])
                 <p>The user has completed this prompt <strong>{{ $count['all'] }}</strong> time{{ $count['all'] == 1 ? '' : 's' }} overall.</p>
