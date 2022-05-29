@@ -135,7 +135,7 @@
                     $rewards.load('{{ url('submissions/new/prompt') }}/'+$(this).val());
                 });
 
-                $rewards.load('{{ url('submissions/new/prompt') }}/'+$(this).val());
+                $rewards.load('{{ url('submissions/new/prompt') }}/'+{{ Request::get('prompt_id') }});
             @endif
 
             $submitButton.on('click', function(e) {
