@@ -235,8 +235,6 @@ class PromptService extends Service
             if(isset($data['prompt_category_id']) && $data['prompt_category_id'] == 'none') $data['prompt_category_id'] = null;
 
             // More specific validation
-            if(Prompt::where('name', $data['name'])->where('id', '!=', $prompt->id)->exists()) throw new \Exception("The name has already been taken.");
-            if((isset($data['prompt_category_id']) && $data['prompt_category_id']) && !PromptCategory::where('id', $data['prompt_category_id'])->exists()) throw new \Exception("The selected prompt category is invalid.");
             if(isset($data['prefix']) && Prompt::where('prefix', $data['prefix'])->where('id', '!=', $prompt->id)->exists()) throw new \Exception("That prefix has already been taken.");
 
             $data = $this->populateData($data, $prompt);
