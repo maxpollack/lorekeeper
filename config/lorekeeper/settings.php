@@ -36,7 +36,7 @@ return [
     | site wherever the name needs to be displayed.
     |
     */
-    'site_name' => 'Xeros',
+    'site_name' => 'Xero',
 
     /*
     |--------------------------------------------------------------------------
@@ -139,7 +139,7 @@ return [
     'watermark_masterlist_images' => 1,
     'masterlist_image_dimension' => 0,
     'masterlist_image_format' => null,
-    'masterlist_image_background' => '#4e5050',
+    'masterlist_image_background' => '#4E504F',
 
     /*
     |--------------------------------------------------------------------------
