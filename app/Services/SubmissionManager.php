@@ -21,6 +21,7 @@ use App\Models\Item\Item;
 use App\Models\Loot\LootTable;
 use App\Models\Raffle\Raffle;
 use App\Models\Prompt\Prompt;
+use App\Models\User\UserIp;
 
 class SubmissionManager extends Service
 {
@@ -78,7 +79,7 @@ class SubmissionManager extends Service
                 }
             }
             else $prompt = null;
-
+            
             // The character identification comes in both the slug field and as character IDs
             // that key the reward ID/quantity arrays.
             // We'll need to match characters to the rewards for them.
