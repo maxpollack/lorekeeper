@@ -12,7 +12,7 @@
 <div class="row shops-row">
     @foreach($shops as $shop)
     @if($shop->is_staff)
-        @if(auth::check() && auth::user()->isstaff)
+        @if(Auth::check() && Auth::user()->isstaff)
             <div class="col-md-3 col-6 mb-3 text-center">
                 <div class="shop-image">
                     <a href="{{ $shop->url }}"><img src="{{ $shop->shopImageUrl }}" /></a>
