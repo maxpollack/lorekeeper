@@ -8,9 +8,7 @@
 <h1>
     Foraging
 </h1>
-
-<p>Welcome to foraging! Here you can choose an area to check for goodies.</p>
-<p>Goods will be claimable after you return from scavenging! Usually, about an hour is the amount of time it takes to check out an area.</p>
+<p>Once per day, you can venture out into the forest for an hour to forage for mushrooms. Let's see what you can find!</p>
 @if($user->foraging->last_foraged_at)
     <p>
         Last Foraged: {!! pretty_date($user->foraging->last_foraged_at) !!}
@@ -101,6 +99,7 @@
                 {!! Form::open(['url' => 'foraging/forage/'.$table->id ]) !!}
 
                     <img src="{{ $table->imageUrl }}" class="img-fluid mb-2"/>
+                    <br/>
                     {!! Form::submit('Forage in the ' . $table->display_name , ['class' => 'btn btn-primary m-2']) !!}
 
                 {!! Form::close() !!}
