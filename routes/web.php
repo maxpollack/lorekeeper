@@ -24,10 +24,6 @@ Route::group(['middleware' => ['ip']], function() {
         Routes that require login
     **************************************************************************************************/
     Route::group(['middleware' => ['auth', 'verified']], function() {
-
-    # SET BIRTHDATE
-    Route::get('/birthday', 'HomeController@getBirthday')->name('birthday');
-    Route::post('/birthday', 'HomeController@postBirthday');
         # LINK DA ACCOUNT
         Route::get('/link', 'HomeController@getLink')->name('link');
         
@@ -36,7 +32,7 @@ Route::group(['middleware' => ['ip']], function() {
 
         # SET BIRTHDATE
         Route::get('/birthday', 'HomeController@getBirthday')->name('birthday');
-        Route::post('/birthday', 'HomeController@postBirthday')->name('birthday');
+        Route::post('/birthday', 'HomeController@postBirthday');
 
         Route::get('/blocked', 'HomeController@getBirthdayBlocked')->name('blocked');
 
@@ -49,7 +45,6 @@ Route::group(['middleware' => ['ip']], function() {
         Route::group(['middleware' => ['alias']], function() {
 
             require_once __DIR__.'/lorekeeper/members.php';
-
             /**********************************************************************************************
                 Admin panel routes
             **********************************************************************************************/
