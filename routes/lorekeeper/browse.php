@@ -216,3 +216,6 @@ Route::group(['prefix' => 'world', 'namespace' => 'WorldExpansion'], function() 
 });
 
 
+Route::get('time' , function() {
+    return date('Y-m-d H:i:s');
+});
