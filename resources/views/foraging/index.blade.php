@@ -8,7 +8,7 @@
 <h1>
     Foraging
 </h1>
-<p>Once per day, you can venture out into the forest for an hour to forage for mushrooms. Let's see what you can find!</p>
+<p>Every day, you can venture out into the wilds for a bit to forage for all sorts of flora and fauna. Let's see what you can find!</p>
 @if($user->foraging->last_foraged_at)
     <p>
         Last Foraged: {!! pretty_date($user->foraging->last_foraged_at) !!}
