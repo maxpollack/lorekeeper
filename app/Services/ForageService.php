@@ -174,7 +174,7 @@ class ForageService extends Service
             
             $user->foraging->last_forage_id = $id; // set id so we can distribute after an hour
             $user->foraging->last_foraged_at = carbon::now(); // set time, this is useless and just for funsies
-            $user->foraging->distribute_at = carbon::now()->addMinutes(60); // set time to allow the user to claim, we can technically calculate this
+            $user->foraging->distribute_at = carbon::now()->addMinutes(5); // set time to allow the user to claim, we can technically calculate this
                                                                             // but i set it up like this so it's staying like this
             $user->foraging->stamina -= 1;
             $user->foraging->save();
