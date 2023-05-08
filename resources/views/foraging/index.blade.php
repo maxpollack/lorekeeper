@@ -77,7 +77,7 @@
 
     <div id="time">Foraging complete in {{ $diff < 1 ? 'less than a minute' : $diff }}</div>
     <p>Started {!! pretty_date($user->foraging->last_foraged_at)!!}
-@elseif($user->foraging->forage && $user->foraging->distribute_at <= $now && $user->foraging->last_forage_id)
+@elseif($user->foraging->distribute_at <= $now && $user->foraging->last_forage_id && $user->foraging->forage)
     {{-- When foraging is done and we can claim --}}
     <div class="container text-center">
         {!! Form::open(['url' => 'foraging/claim' ]) !!}
