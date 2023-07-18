@@ -1,5 +1,5 @@
 name: remote ssh command
-on: [push]
+on: [push, workflow_dispatch]
 jobs:
   build:
     name: Build
@@ -9,7 +9,7 @@ jobs:
       uses: appleboy/ssh-action@v0.1.10
       with:
         host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
+        username: ${{ secrets.USER }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: whoami
