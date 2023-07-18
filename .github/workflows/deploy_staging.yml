@@ -13,4 +13,4 @@ jobs:
         key: ${{ secrets.CERTIFICATE }}
         port: ${{ secrets.PORT }}
         passphrase: ${{ secrets.PASSPHRASE }}
-        script: whoami
+        script: ./deploy.sh
