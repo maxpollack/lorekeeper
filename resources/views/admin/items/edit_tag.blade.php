@@ -31,30 +31,28 @@
         {!! Form::submit('Edit Tag Settings', ['class' => 'btn btn-primary']) !!}
     </div>
 
-<<<<<<< HEAD
-{!! Form::close() !!}
-@if(View::exists('admin.items.tags.'.$tag->tag.'_post'))
-    @include('admin.items.tags.'.$tag->tag.'_post', ['item' => $item, 'tag' => $tag])
-@endif
-=======
-    {!! Form::close() !!}
-    @if (View::exists('admin.items.tags.' . $tag->tag . '_post'))
+    <<<<<<< HEAD {!! Form::close() !!} @if (View::exists('admin.items.tags.' . $tag->tag . '_post'))
         @include('admin.items.tags.' . $tag->tag . '_post', ['item' => $item, 'tag' => $tag])
-    @endif
->>>>>>> upstream/develop
-@endsection
+        @endif
+        =======
+        {!! Form::close() !!}
+        @if (View::exists('admin.items.tags.' . $tag->tag . '_post'))
+            @include('admin.items.tags.' . $tag->tag . '_post', ['item' => $item, 'tag' => $tag])
+        @endif
+        >>>>>>> upstream/develop
+    @endsection
 
-@section('scripts')
-    @parent
-    @if (View::exists('js.admin_items.' . $tag->tag))
-        @include('js.admin_items.' . $tag->tag, ['item' => $item, 'tag' => $tag])
-    @endif
-    <script>
-        $(document).ready(function() {
-            $('.delete-tag-button').on('click', function(e) {
-                e.preventDefault();
-                loadModal("{{ url('admin/data/items/delete-tag') }}/{{ $item->id }}/{{ $tag->tag }}", 'Delete Tag');
+    @section('scripts')
+        @parent
+        @if (View::exists('js.admin_items.' . $tag->tag))
+            @include('js.admin_items.' . $tag->tag, ['item' => $item, 'tag' => $tag])
+        @endif
+        <script>
+            $(document).ready(function() {
+                $('.delete-tag-button').on('click', function(e) {
+                    e.preventDefault();
+                    loadModal("{{ url('admin/data/items/delete-tag') }}/{{ $item->id }}/{{ $tag->tag }}", 'Delete Tag');
+                });
             });
-        });
-    </script>
-@endsection
+        </script>
+    @endsection

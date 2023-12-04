@@ -39,58 +39,61 @@
             {!! Form::select('prompt_id', $prompts, Request::get('prompt_id'), ['class' => 'form-control']) !!}
         </div>
         <div class="form-group mr-3 mb-3">
-<<<<<<< HEAD
-            {!! Form::select('location_id', $locations, Request::get('location_id'), ['class' => 'form-control']) !!}
-        </div>
-        <div class="form-group mr-3 mb-3">
-            {!! Form::select('sort', [
-                'newest'         => 'Newest First',
-                'oldest'         => 'Oldest First',
-                'alpha'          => 'Sort Alphabetically (A-Z)',
-                'alpha-reverse'  => 'Sort Alphabetically (Z-A)',
-                'prompt'         => 'Sort by Prompt (Newest to Oldest)',
-                'prompt-reverse' => 'Sort by Prompt (Oldest to Newest)',
-            ], Request::get('sort') ? : 'category', ['class' => 'form-control']) !!}
-=======
-            {!! Form::select(
-                'sort',
-                [
-                    'newest' => 'Newest First',
-                    'oldest' => 'Oldest First',
-                    'alpha' => 'Sort Alphabetically (A-Z)',
-                    'alpha-reverse' => 'Sort Alphabetically (Z-A)',
-                    'prompt' => 'Sort by Prompt (Newest to Oldest)',
-                    'prompt-reverse' => 'Sort by Prompt (Oldest to Newest)',
-                ],
-                Request::get('sort') ?: 'category',
-                ['class' => 'form-control'],
-            ) !!}
->>>>>>> upstream/develop
-        </div>
-        <div class="form-group mb-3">
-            {!! Form::submit('Search', ['class' => 'btn btn-primary']) !!}
-        </div>
-        {!! Form::close() !!}
-    </div>
-
-    @if ($gallery->submissions->count())
-        {!! $submissions->render() !!}
-
-        <div class="d-flex align-content-around flex-wrap mb-2">
-            @foreach ($submissions as $submission)
-                @include('galleries._thumb', ['submission' => $submission, 'gallery' => true])
-            @endforeach
+            <<<<<<< HEAD {!! Form::select('location_id', $locations, Request::get('location_id'), ['class' => 'form-control']) !!} </div>
+                <div class="form-group mr-3 mb-3">
+                    {!! Form::select(
+                        'sort',
+                        [
+                            'newest' => 'Newest First',
+                            'oldest' => 'Oldest First',
+                            'alpha' => 'Sort Alphabetically (A-Z)',
+                            'alpha-reverse' => 'Sort Alphabetically (Z-A)',
+                            'prompt' => 'Sort by Prompt (Newest to Oldest)',
+                            'prompt-reverse' => 'Sort by Prompt (Oldest to Newest)',
+                        ],
+                        Request::get('sort') ?: 'category',
+                        ['class' => 'form-control'],
+                    ) !!}
+                    =======
+                    {!! Form::select(
+                        'sort',
+                        [
+                            'newest' => 'Newest First',
+                            'oldest' => 'Oldest First',
+                            'alpha' => 'Sort Alphabetically (A-Z)',
+                            'alpha-reverse' => 'Sort Alphabetically (Z-A)',
+                            'prompt' => 'Sort by Prompt (Newest to Oldest)',
+                            'prompt-reverse' => 'Sort by Prompt (Oldest to Newest)',
+                        ],
+                        Request::get('sort') ?: 'category',
+                        ['class' => 'form-control'],
+                    ) !!}
+                    >>>>>>> upstream/develop
+                </div>
+                <div class="form-group mb-3">
+                    {!! Form::submit('Search', ['class' => 'btn btn-primary']) !!}
+                </div>
+                {!! Form::close() !!}
         </div>
 
-        {!! $submissions->render() !!}
-    @elseif($childSubmissions->count())
-        <div class="d-flex align-content-around flex-wrap mb-2">
-            @foreach ($childSubmissions->orderBy('created_at', 'DESC')->get()->take(20) as $submission)
-                @include('galleries._thumb', ['submission' => $submission, 'gallery' => false])
-            @endforeach
-        </div>
-    @else
-        <p>No submissions found!</p>
-    @endif
+        @if ($gallery->submissions->count())
+            {!! $submissions->render() !!}
 
-@endsection
+            <div class="d-flex align-content-around flex-wrap mb-2">
+                @foreach ($submissions as $submission)
+                    @include('galleries._thumb', ['submission' => $submission, 'gallery' => true])
+                @endforeach
+            </div>
+
+            {!! $submissions->render() !!}
+        @elseif($childSubmissions->count())
+            <div class="d-flex align-content-around flex-wrap mb-2">
+                @foreach ($childSubmissions->orderBy('created_at', 'DESC')->get()->take(20) as $submission)
+                    @include('galleries._thumb', ['submission' => $submission, 'gallery' => false])
+                @endforeach
+            </div>
+        @else
+            <p>No submissions found!</p>
+        @endif
+
+    @endsection

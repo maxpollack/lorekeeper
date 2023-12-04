@@ -33,98 +33,94 @@
             {!! Form::label('name', 'Name') !!}
             {!! Form::text('name', $character->name, ['class' => 'form-control']) !!}
         </div>
-<<<<<<< HEAD
+        <<<<<<< HEAD @endif
     @endif
-@endif
 
-@if(!$character->is_myo_slot && ($char_enabled == 2 || (Auth::user()->isStaff && $char_enabled == 3)))
-@if(Auth::user()->isStaff && $char_enabled == 3)
-    <div class="alert alert-warning">You can edit this because you are a staff member. Normal users cannot edit their character locations freely.</div>
-@endif
-<div class="form-group row">
-    <label class="col-md-1 col-form-label">Location</label>
-    <div class="col-md">
-    {!! Form::select('location', [0=>'Choose a Location'] + $locations, isset($character->home_id) ? $character->home_id : 0, ['class' => 'form-control selectize']) !!}
-    </div>
-</div>
-@endif
-
-@if(!$character->is_myo_slot && ($char_faction_enabled == 2 || (Auth::user()->isStaff && $char_faction_enabled == 3)))
-@if(Auth::user()->isStaff && $char_faction_enabled == 3)
-    <div class="alert alert-warning">You can edit this because you are a staff member. Normal users cannot edit their character factions freely.</div>
-@endif
-<p>Please note that changing this character's faction will remove them from any special ranks and reset their faction standing!</p>
-<div class="form-group row">
-    <label class="col-md-1 col-form-label">Faction</label>
-    <div class="col-md">
-    {!! Form::select('faction', [0=>'Choose a Faction'] + $factions, isset($character->faction_id) ? $character->faction_id : 0, ['class' => 'form-control selectize']) !!}
-    </div>
-</div>
-@endif
-
-<div class="form-group">
-    {!! Form::label('text', 'Profile Content') !!}
-    {!! Form::textarea('text', $character->profile->text, ['class' => 'wysiwyg form-control']) !!}
-</div>
-
-@if($character->user_id == Auth::user()->id)
-    @if(!$character->is_myo_slot)
-        <div class="row">
-            <div class="col-md form-group">
-                {!! Form::label('is_gift_art_allowed', 'Allow Gift Art', ['class' => 'form-check-label mb-3']) !!} {!! add_help('This will place the character on the list of characters that can be drawn for gift art. This does not have any other functionality, but allow users looking for characters to draw to find your character easily.') !!}
-                {!! Form::select('is_gift_art_allowed', [0 => 'No', 1 => 'Yes', 2 => 'Ask First'], $character->is_gift_art_allowed, ['class' => 'form-control user-select']) !!}
-=======
-        @if (Config::get('lorekeeper.extensions.character_TH_profile_link'))
-            <div class="form-group">
-                {!! Form::label('link', 'Profile Link') !!}
-                {!! Form::text('link', $character->profile->link, ['class' => 'form-control']) !!}
->>>>>>> upstream/develop
-            </div>
+    @if (!$character->is_myo_slot && ($char_enabled == 2 || (Auth::user()->isStaff && $char_enabled == 3)))
+        @if (Auth::user()->isStaff && $char_enabled == 3)
+            <div class="alert alert-warning">You can edit this because you are a staff member. Normal users cannot edit their character locations freely.</div>
         @endif
-    @endif
-<<<<<<< HEAD
-    @if($character->is_tradeable ||  $character->is_sellable)
-        <div class="form-group disabled">
-            {!! Form::checkbox('is_trading', 1, $character->is_trading, ['class' => 'form-check-input', 'data-toggle' => 'toggle']) !!}
-            {!! Form::label('is_trading', 'Up For Trade', ['class' => 'form-check-label ml-3']) !!} {!! add_help('This will place the character on the list of characters that are currently up for trade. This does not have any other functionality, but allow users looking for trades to find your character easily.') !!}
+        <div class="form-group row">
+            <label class="col-md-1 col-form-label">Location</label>
+            <div class="col-md">
+                {!! Form::select('location', [0 => 'Choose a Location'] + $locations, isset($character->home_id) ? $character->home_id : 0, ['class' => 'form-control selectize']) !!}
+            </div>
         </div>
-    @else
-        <div class="alert alert-secondary">Cannot be set to "Up for Trade" as character cannot be traded or sold.</div>
     @endif
-@endif
-@if($character->user_id != Auth::user()->id)
-=======
->>>>>>> upstream/develop
+
+    @if (!$character->is_myo_slot && ($char_faction_enabled == 2 || (Auth::user()->isStaff && $char_faction_enabled == 3)))
+        @if (Auth::user()->isStaff && $char_faction_enabled == 3)
+            <div class="alert alert-warning">You can edit this because you are a staff member. Normal users cannot edit their character factions freely.</div>
+        @endif
+        <p>Please note that changing this character's faction will remove them from any special ranks and reset their faction standing!</p>
+        <div class="form-group row">
+            <label class="col-md-1 col-form-label">Faction</label>
+            <div class="col-md">
+                {!! Form::select('faction', [0 => 'Choose a Faction'] + $factions, isset($character->faction_id) ? $character->faction_id : 0, ['class' => 'form-control selectize']) !!}
+            </div>
+        </div>
+    @endif
+
     <div class="form-group">
         {!! Form::label('text', 'Profile Content') !!}
         {!! Form::textarea('text', $character->profile->text, ['class' => 'wysiwyg form-control']) !!}
     </div>
 
-<<<<<<< HEAD
-=======
     @if ($character->user_id == Auth::user()->id)
         @if (!$character->is_myo_slot)
             <div class="row">
                 <div class="col-md form-group">
                     {!! Form::label('is_gift_art_allowed', 'Allow Gift Art', ['class' => 'form-check-label mb-3']) !!} {!! add_help('This will place the character on the list of characters that can be drawn for gift art. This does not have any other functionality, but allow users looking for characters to draw to find your character easily.') !!}
                     {!! Form::select('is_gift_art_allowed', [0 => 'No', 1 => 'Yes', 2 => 'Ask First'], $character->is_gift_art_allowed, ['class' => 'form-control user-select']) !!}
-                </div>
-                <div class="col-md form-group">
-                    {!! Form::label('is_gift_writing_allowed', 'Allow Gift Writing', ['class' => 'form-check-label mb-3']) !!} {!! add_help(
-                        'This will place the character on the list of characters that can be written about for gift writing. This does not have any other functionality, but allow users looking for characters to write about to find your character easily.',
-                    ) !!}
-                    {!! Form::select('is_gift_writing_allowed', [0 => 'No', 1 => 'Yes', 2 => 'Ask First'], $character->is_gift_writing_allowed, ['class' => 'form-control user-select']) !!}
-                </div>
-            </div>
+                    =======
+                    @if (Config::get('lorekeeper.extensions.character_TH_profile_link'))
+                        <div class="form-group">
+                            {!! Form::label('link', 'Profile Link') !!}
+                            {!! Form::text('link', $character->profile->link, ['class' => 'form-control']) !!}
+                            >>>>>>> upstream/develop
+                        </div>
+                    @endif
         @endif
-        @if ($character->is_tradeable || $character->is_sellable)
+        <<<<<<< HEAD @if ($character->is_tradeable || $character->is_sellable)
             <div class="form-group disabled">
                 {!! Form::checkbox('is_trading', 1, $character->is_trading, ['class' => 'form-check-input', 'data-toggle' => 'toggle']) !!}
                 {!! Form::label('is_trading', 'Up For Trade', ['class' => 'form-check-label ml-3']) !!} {!! add_help('This will place the character on the list of characters that are currently up for trade. This does not have any other functionality, but allow users looking for trades to find your character easily.') !!}
             </div>
         @else
             <div class="alert alert-secondary">Cannot be set to "Up for Trade" as character cannot be traded or sold.</div>
-        @endif
+    @endif
+    @endif
+    @if ($character->user_id != Auth::user()->id)
+        =======
+        >>>>>>> upstream/develop
+        <div class="form-group">
+            {!! Form::label('text', 'Profile Content') !!}
+            {!! Form::textarea('text', $character->profile->text, ['class' => 'wysiwyg form-control']) !!}
+        </div>
+
+        <<<<<<< HEAD=======@if ($character->user_id == Auth::user()->id)
+            @if (!$character->is_myo_slot)
+                <div class="row">
+                    <div class="col-md form-group">
+                        {!! Form::label('is_gift_art_allowed', 'Allow Gift Art', ['class' => 'form-check-label mb-3']) !!} {!! add_help('This will place the character on the list of characters that can be drawn for gift art. This does not have any other functionality, but allow users looking for characters to draw to find your character easily.') !!}
+                        {!! Form::select('is_gift_art_allowed', [0 => 'No', 1 => 'Yes', 2 => 'Ask First'], $character->is_gift_art_allowed, ['class' => 'form-control user-select']) !!}
+                    </div>
+                    <div class="col-md form-group">
+                        {!! Form::label('is_gift_writing_allowed', 'Allow Gift Writing', ['class' => 'form-check-label mb-3']) !!} {!! add_help(
+                            'This will place the character on the list of characters that can be written about for gift writing. This does not have any other functionality, but allow users looking for characters to write about to find your character easily.',
+                        ) !!}
+                        {!! Form::select('is_gift_writing_allowed', [0 => 'No', 1 => 'Yes', 2 => 'Ask First'], $character->is_gift_writing_allowed, ['class' => 'form-control user-select']) !!}
+                    </div>
+                </div>
+            @endif
+            @if ($character->is_tradeable || $character->is_sellable)
+                <div class="form-group disabled">
+                    {!! Form::checkbox('is_trading', 1, $character->is_trading, ['class' => 'form-check-input', 'data-toggle' => 'toggle']) !!}
+                    {!! Form::label('is_trading', 'Up For Trade', ['class' => 'form-check-label ml-3']) !!} {!! add_help('This will place the character on the list of characters that are currently up for trade. This does not have any other functionality, but allow users looking for trades to find your character easily.') !!}
+                </div>
+            @else
+                <div class="alert alert-secondary">Cannot be set to "Up for Trade" as character cannot be traded or sold.</div>
+            @endif
     @endif
     @if ($character->user_id != Auth::user()->id)
         <div class="form-group">
@@ -137,5 +133,5 @@
     </div>
     {!! Form::close() !!}
 
->>>>>>> upstream/develop
+    >>>>>>> upstream/develop
 @endsection

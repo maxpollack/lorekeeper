@@ -93,167 +93,167 @@
                     {!! $submission->prompt_id ? '<p><strong>Prompt:</strong> ' . $submission->prompt->displayName . '</p>' : '' !!}
                 @endif
 
-<<<<<<< HEAD
-                @if($gallery->location_selection == 1 && (!$submission->id || Auth::user()->hasPower('manage_submissions')))
+                <<<<<<< HEAD @if ($gallery->location_selection == 1 && (!$submission->id || Auth::user()->hasPower('manage_submissions')))
                     <div class="form-group">
-                        {!! Form::label('location_id', ($submission->id && Auth::user()->hasPower('manage_submissions') ? '[Admin] ' : '').'Location (Optional)') !!} {!! add_help('This <strong>does not</strong> automatically submit to the selected location, and you will need to submit to it separately. The location selected here will be displayed on the submission page for future reference. You will not be able to edit this after creating the submission.') !!}
+                        {!! Form::label('location_id', ($submission->id && Auth::user()->hasPower('manage_submissions') ? '[Admin] ' : '') . 'Location (Optional)') !!} {!! add_help(
+                            'This <strong>does not</strong> automatically submit to the selected location, and you will need to submit to it separately. The location selected here will be displayed on the submission page for future reference. You will not be able to edit this after creating the submission.',
+                        ) !!}
                         {!! Form::select('location_id', $locations, $submission->location_id, ['class' => 'form-control selectize', 'id' => 'location', 'placeholder' => 'Select a Location']) !!}
                     </div>
                 @else
-                    {!! $submission->location_id ? '<p><strong>Location:</strong> '.$submission->location->displayName.'</p>' : '' !!}
-                @endif
+                    {!! $submission->location_id ? '<p><strong>Location:</strong> ' . $submission->location->displayName . '</p>' : '' !!}
+    @endif
 
-                @if($submission->id && Auth::user()->hasPower('manage_submissions'))
-=======
-                @if ($submission->id && Auth::user()->hasPower('manage_submissions'))
->>>>>>> upstream/develop
-                    <div class="form-group">
-                        {!! Form::label('gallery_id', '[Admin] Gallery / Move Submission') !!} {!! add_help(
-                            'Use in the event you need to move a submission between galleries. If left blank, leaves the submission in its current location. Note that if currency rewards from submissions are enabled, this won\'t retroactively fill out the form if moved from a gallery where they are disabled to one where they are enabled.',
-                        ) !!}
-                        {!! Form::select('gallery_id', $galleryOptions, null, ['class' => 'form-control selectize gallery-select original', 'id' => 'gallery', 'placeholder' => '']) !!}
-                    </div>
-                @endif
-
-                @if (!$submission->id)
-                    {!! Form::hidden('gallery_id', $gallery->id) !!}
-                @endif
-
-                <h3>Characters</h3>
-                <p>
-                    Add the characters included in this piece.
-<<<<<<< HEAD
-                    @if(Settings::get('gallery_submissions_reward_currency'))
-=======
-                    @if (Settings::get('gallery_submissions_reward_currency'))
->>>>>>> upstream/develop
-                        This helps the staff processing your submission award {!! $currency->displayName !!} for it, so be sure to add every character.
-                    @endif
-                </p>
-                <div id="characters" class="mb-3">
-                    @if ($submission->id)
-                        @foreach ($submission->characters as $character)
-                            @include('galleries._character_select_entry', ['character' => $character])
-                        @endforeach
-                    @endif
-                </div>
-                <div class="text-right mb-3">
-                    <a href="#" class="btn btn-outline-info" id="addCharacter">Add Character</a>
-                </div>
+    @if ($submission->id && Auth::user()->hasPower('manage_submissions'))
+        =======
+        @if ($submission->id && Auth::user()->hasPower('manage_submissions'))
+            >>>>>>> upstream/develop
+            <div class="form-group">
+                {!! Form::label('gallery_id', '[Admin] Gallery / Move Submission') !!} {!! add_help(
+                    'Use in the event you need to move a submission between galleries. If left blank, leaves the submission in its current location. Note that if currency rewards from submissions are enabled, this won\'t retroactively fill out the form if moved from a gallery where they are disabled to one where they are enabled.',
+                ) !!}
+                {!! Form::select('gallery_id', $galleryOptions, null, ['class' => 'form-control selectize gallery-select original', 'id' => 'gallery', 'placeholder' => '']) !!}
             </div>
-            @if (!$submission->id || $submission->status == 'Pending')
-                <div class="col-md-4">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <h5>Collaborators</h5>
-                        </div>
-                        <div class="card-body">
-                            <p>If this piece is a collaboration, add collaborators and their roles here, including yourself. <strong>Otherwise, leave this blank</strong>. You <strong>will not</strong> be able to edit this once the submission has been
-                                accepted, but will while it is still pending.</p>
-                            @if (!$submission->id || $submission->status == 'Pending')
-                                <div class="text-right mb-3">
-                                    <a href="#" class="btn btn-outline-info" id="add-collaborator">Add Collaborator</a>
-                                </div>
-                                <div id="collaboratorList">
-                                    @if ($submission->id)
-                                        @foreach ($submission->collaborators as $collaborator)
-                                            <div class="mb-2">
-                                                <div class="d-flex">{!! $collaborator->has_approved ? '<div class="btn btn-success mb-2 mr-2" data-toggle="tooltip" title="Has Approved"><i class="fas fa-check"></i></div>' : '' !!}{!! Form::select('collaborator_id[]', $users, $collaborator->user_id, ['class' => 'form-control mr-2 collaborator-select original', 'placeholder' => 'Select User']) !!}</div>
-                                                <div class="d-flex">
-                                                    {!! Form::text('collaborator_data[]', $collaborator->data, ['class' => 'form-control mr-2', 'placeholder' => 'Role (Sketch, Lines, etc.)']) !!}
-                                                    <a href="#" class="remove-collaborator btn btn-danger mb-2">×</a>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    @endif
-                                </div>
-                            @else
-                                <p>
-                                    @if ($submission->collaborators->count())
-                                        @foreach ($submission->collaborators as $collaborator)
-                                            {!! $collaborator->user->displayName !!}: {{ $collaborator->data }}<br />
-                                        @endforeach
-                                    @endif
-                                </p>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <h5>Other Participants</h5>
-                        </div>
-                        <div class="card-body">
-                            <p>If this piece is gift, part of a trade, or was commissioned, specify the related user(s) here and select their role. <strong>Otherwise, leave this blank</strong>. You <strong>will not</strong> be able to edit this once the
-                                submission has been accepted, but will while it is still pending.</p>
-                            @if (!$submission->id || $submission->status == 'Pending')
-                                <div class="text-right mb-3">
-                                    <a href="#" class="btn btn-outline-info" id="add-participant">Add Participant</a>
-                                </div>
-                                <div id="participantList">
-                                    @if ($submission->id)
-                                        @foreach ($submission->participants as $participant)
-                                            <div class="mb-2">
-                                                <div class="d-flex">{!! Form::select('participant_id[]', $users, $participant->user_id, ['class' => 'form-control mr-2 participant-select original', 'placeholder' => 'Select User']) !!}</div>
-                                                <div class="d-flex">
-                                                    {!! Form::select('participant_type[]', ['Gift' => 'Gift For', 'Trade' => 'Traded For', 'Comm' => 'Commissioned', 'Comm (Currency)' => 'Commissioned (' . $currency->name . ')'], $participant->type, [
-                                                        'class' => 'form-control mr-2',
-                                                        'placeholder' => 'Select Role',
-                                                    ]) !!}
-                                                    <a href="#" class="remove-participant btn btn-danger mb-2">×</a>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    @endif
-                                </div>
-                            @else
-                                <p>
-                                    @if ($submission->participants->count())
-                                        @foreach ($submission->participants as $participant)
-                                            {!! $participant->user->displayName !!}: {{ $participant->displayType }}<br />
-                                        @endforeach
-                                    @endif
-                                </p>
-                            @endif
-                        </div>
-                    </div>
-                    @if (Settings::get('gallery_submissions_reward_currency') && $gallery->currency_enabled && !$submission->id)
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <h5>{!! $currency->name !!} Awards</h5>
-                            </div>
-                            <div class="card-body">
-                                <p>Please select options as appropriate for this piece. This will help the staff processing your submission award {!! $currency->displayName !!} for it. You <strong>will not</strong> be able to edit this after creating the
-                                    submission.</p>
+        @endif
 
-                                @foreach (Config::get('lorekeeper.group_currency_form') as $key => $field)
-                                    <div class="form-group">
-                                        @if ($field['type'] == 'checkbox')
-                                            <input class="form-check-input ml-0 pr-4" name="{{ $key }}" type="checkbox" value="{{ isset($field['value']) ? $field['value'] : 1 }}">
-                                        @endif
-                                        @if (isset($field['label']))
-                                            {!! Form::label(isset($field['multiple']) && $field['multiple'] ? $key . '[]' : $key, $field['label'], [
-                                                'class' => 'label-class' . ($field['type'] == 'checkbox' ? ' ml-3' : '') . (isset($field['rules']) && $field['rules'] ? ' ' . $field['rules'] : ''),
-                                            ]) !!}
-                                        @endif
-                                        @if ($field['type'] == 'choice' && isset($field['choices']))
-                                            @foreach ($field['choices'] as $value => $choice)
-                                                <div class="choice-wrapper">
-                                                    <input class="form-check-input ml-0 pr-4" name="{{ isset($field['multiple']) && $field['multiple'] ? $key . '[]' : $key }}"
-                                                        id="{{ isset($field['multiple']) && $field['multiple'] ? $key . '[]' : $key . '_' . $value }}" type="{{ isset($field['multiple']) && $field['multiple'] ? 'checkbox' : 'radio' }}"
-                                                        value="{{ $value }}">
-                                                    <label for="{{ $key }}[]" class="label-class ml-3">{{ $choice }}</label>
-                                                </div>
-                                            @endforeach
-                                        @elseif($field['type'] != 'checkbox')
-                                            <input class="form-control" name="{{ $key }}" type="{{ $field['type'] }}" id="{{ $key }}">
-                                        @endif
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-                </div>
+        @if (!$submission->id)
+            {!! Form::hidden('gallery_id', $gallery->id) !!}
+        @endif
+
+        <h3>Characters</h3>
+        <p>
+            Add the characters included in this piece.
+            <<<<<<< HEAD @if (Settings::get('gallery_submissions_reward_currency'))
+                =======
+                @if (Settings::get('gallery_submissions_reward_currency'))
+                    >>>>>>> upstream/develop
+                    This helps the staff processing your submission award {!! $currency->displayName !!} for it, so be sure to add every character.
+                @endif
+        </p>
+        <div id="characters" class="mb-3">
+            @if ($submission->id)
+                @foreach ($submission->characters as $character)
+                    @include('galleries._character_select_entry', ['character' => $character])
+                @endforeach
             @endif
+        </div>
+        <div class="text-right mb-3">
+            <a href="#" class="btn btn-outline-info" id="addCharacter">Add Character</a>
+        </div>
+        </div>
+        @if (!$submission->id || $submission->status == 'Pending')
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Collaborators</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>If this piece is a collaboration, add collaborators and their roles here, including yourself. <strong>Otherwise, leave this blank</strong>. You <strong>will not</strong> be able to edit this once the submission has been
+                            accepted, but will while it is still pending.</p>
+                        @if (!$submission->id || $submission->status == 'Pending')
+                            <div class="text-right mb-3">
+                                <a href="#" class="btn btn-outline-info" id="add-collaborator">Add Collaborator</a>
+                            </div>
+                            <div id="collaboratorList">
+                                @if ($submission->id)
+                                    @foreach ($submission->collaborators as $collaborator)
+                                        <div class="mb-2">
+                                            <div class="d-flex">{!! $collaborator->has_approved ? '<div class="btn btn-success mb-2 mr-2" data-toggle="tooltip" title="Has Approved"><i class="fas fa-check"></i></div>' : '' !!}{!! Form::select('collaborator_id[]', $users, $collaborator->user_id, ['class' => 'form-control mr-2 collaborator-select original', 'placeholder' => 'Select User']) !!}</div>
+                                            <div class="d-flex">
+                                                {!! Form::text('collaborator_data[]', $collaborator->data, ['class' => 'form-control mr-2', 'placeholder' => 'Role (Sketch, Lines, etc.)']) !!}
+                                                <a href="#" class="remove-collaborator btn btn-danger mb-2">×</a>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+                            </div>
+                        @else
+                            <p>
+                                @if ($submission->collaborators->count())
+                                    @foreach ($submission->collaborators as $collaborator)
+                                        {!! $collaborator->user->displayName !!}: {{ $collaborator->data }}<br />
+                                    @endforeach
+                                @endif
+                            </p>
+                        @endif
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Other Participants</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>If this piece is gift, part of a trade, or was commissioned, specify the related user(s) here and select their role. <strong>Otherwise, leave this blank</strong>. You <strong>will not</strong> be able to edit this once the
+                            submission has been accepted, but will while it is still pending.</p>
+                        @if (!$submission->id || $submission->status == 'Pending')
+                            <div class="text-right mb-3">
+                                <a href="#" class="btn btn-outline-info" id="add-participant">Add Participant</a>
+                            </div>
+                            <div id="participantList">
+                                @if ($submission->id)
+                                    @foreach ($submission->participants as $participant)
+                                        <div class="mb-2">
+                                            <div class="d-flex">{!! Form::select('participant_id[]', $users, $participant->user_id, ['class' => 'form-control mr-2 participant-select original', 'placeholder' => 'Select User']) !!}</div>
+                                            <div class="d-flex">
+                                                {!! Form::select('participant_type[]', ['Gift' => 'Gift For', 'Trade' => 'Traded For', 'Comm' => 'Commissioned', 'Comm (Currency)' => 'Commissioned (' . $currency->name . ')'], $participant->type, [
+                                                    'class' => 'form-control mr-2',
+                                                    'placeholder' => 'Select Role',
+                                                ]) !!}
+                                                <a href="#" class="remove-participant btn btn-danger mb-2">×</a>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
+                            </div>
+                        @else
+                            <p>
+                                @if ($submission->participants->count())
+                                    @foreach ($submission->participants as $participant)
+                                        {!! $participant->user->displayName !!}: {{ $participant->displayType }}<br />
+                                    @endforeach
+                                @endif
+                            </p>
+                        @endif
+                    </div>
+                </div>
+                @if (Settings::get('gallery_submissions_reward_currency') && $gallery->currency_enabled && !$submission->id)
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5>{!! $currency->name !!} Awards</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>Please select options as appropriate for this piece. This will help the staff processing your submission award {!! $currency->displayName !!} for it. You <strong>will not</strong> be able to edit this after creating the
+                                submission.</p>
+
+                            @foreach (Config::get('lorekeeper.group_currency_form') as $key => $field)
+                                <div class="form-group">
+                                    @if ($field['type'] == 'checkbox')
+                                        <input class="form-check-input ml-0 pr-4" name="{{ $key }}" type="checkbox" value="{{ isset($field['value']) ? $field['value'] : 1 }}">
+                                    @endif
+                                    @if (isset($field['label']))
+                                        {!! Form::label(isset($field['multiple']) && $field['multiple'] ? $key . '[]' : $key, $field['label'], [
+                                            'class' => 'label-class' . ($field['type'] == 'checkbox' ? ' ml-3' : '') . (isset($field['rules']) && $field['rules'] ? ' ' . $field['rules'] : ''),
+                                        ]) !!}
+                                    @endif
+                                    @if ($field['type'] == 'choice' && isset($field['choices']))
+                                        @foreach ($field['choices'] as $value => $choice)
+                                            <div class="choice-wrapper">
+                                                <input class="form-check-input ml-0 pr-4" name="{{ isset($field['multiple']) && $field['multiple'] ? $key . '[]' : $key }}"
+                                                    id="{{ isset($field['multiple']) && $field['multiple'] ? $key . '[]' : $key . '_' . $value }}" type="{{ isset($field['multiple']) && $field['multiple'] ? 'checkbox' : 'radio' }}"
+                                                    value="{{ $value }}">
+                                                <label for="{{ $key }}[]" class="label-class ml-3">{{ $choice }}</label>
+                                            </div>
+                                        @endforeach
+                                    @elseif($field['type'] != 'checkbox')
+                                        <input class="form-control" name="{{ $key }}" type="{{ $field['type'] }}" id="{{ $key }}">
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+            </div>
+        @endif
         </div>
 
         @if ($submission->id && Auth::user()->id != $submission->user->id && Auth::user()->hasPower('manage_submissions'))

@@ -83,103 +83,99 @@
         </div>
         {!! Form::close() !!}
 
-<<<<<<< HEAD
-    @include('widgets._character_select', ['characterCurrencies' => $characterCurrencies, 'showLootTables' => false])
-    @if($isClaim)
-        @include('widgets._loot_select_row', ['items' => $items, 'currencies' => $currencies, 'showLootTables' => false, 'showRaffles' => true, 'showRecipes' => true])
-    @else
-        @include('widgets._loot_select_row', ['items' => $items, 'currencies' => $currencies, 'showLootTables' => false, 'showRaffles' => false, 'showRecipes' => false])
-    @endif
-=======
-        @include('widgets._character_select', ['characterCurrencies' => $characterCurrencies, 'showLootTables' => false])
-        @if ($isClaim)
-            @include('widgets._loot_select_row', ['showLootTables' => false, 'showRaffles' => true])
+        <<<<<<< HEAD @include('widgets._character_select', ['characterCurrencies' => $characterCurrencies, 'showLootTables' => false]) @if ($isClaim)
+            @include('widgets._loot_select_row', ['items' => $items, 'currencies' => $currencies, 'showLootTables' => false, 'showRaffles' => true, 'showRecipes' => true])
         @else
-            @include('widgets._loot_select_row', ['showLootTables' => false, 'showRaffles' => false])
-        @endif
->>>>>>> upstream/develop
+            @include('widgets._loot_select_row', ['items' => $items, 'currencies' => $currencies, 'showLootTables' => false, 'showRaffles' => false, 'showRecipes' => false])
+    @endif
+    =======
+    @include('widgets._character_select', ['characterCurrencies' => $characterCurrencies, 'showLootTables' => false])
+    @if ($isClaim)
+        @include('widgets._loot_select_row', ['showLootTables' => false, 'showRaffles' => true])
+    @else
+        @include('widgets._loot_select_row', ['showLootTables' => false, 'showRaffles' => false])
+    @endif
+    >>>>>>> upstream/develop
 
-        <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <span class="modal-title h5 mb-0">Confirm {{ $isClaim ? 'Claim' : 'Submission' }}</span>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <p>This will submit the form and put it into the {{ $isClaim ? 'claims' : 'prompt' }} approval queue. You will not be able to edit the contents after the {{ $isClaim ? 'claim' : 'submission' }} has been made. Click the Confirm
-                            button to complete the {{ $isClaim ? 'claim' : 'submission' }}.</p>
-                        <div class="text-right">
-                            <a href="#" id="formSubmit" class="btn btn-primary">Confirm</a>
-                        </div>
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="modal-title h5 mb-0">Confirm {{ $isClaim ? 'Claim' : 'Submission' }}</span>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>This will submit the form and put it into the {{ $isClaim ? 'claims' : 'prompt' }} approval queue. You will not be able to edit the contents after the {{ $isClaim ? 'claim' : 'submission' }} has been made. Click the Confirm
+                        button to complete the {{ $isClaim ? 'claim' : 'submission' }}.</p>
+                    <div class="text-right">
+                        <a href="#" id="formSubmit" class="btn btn-primary">Confirm</a>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     @endif
 @endsection
 
 @section('scripts')
-<<<<<<< HEAD
-@parent
-@if(!$closed)
-    @if($isClaim)
-        @include('js._loot_js', ['showLootTables' => false, 'showRaffles' => true, 'showRecipes' => true])
-    @else
-        @include('js._loot_js', ['showLootTables' => false, 'showRaffles' => false, 'showRecipes' => false])
-    @endif
-    @include('js._character_select_js')
-    @include('widgets._inventory_select_js', ['readOnly' => true])
-    @include('widgets._bank_select_row', ['owners' => [Auth::user()]])
-    @include('widgets._bank_select_js', [])
-=======
-    @parent
-    @if (!$closed)
+    <<<<<<< HEAD @parent @if (!$closed)
         @if ($isClaim)
-            @include('js._loot_js', ['showLootTables' => false, 'showRaffles' => true])
+            @include('js._loot_js', ['showLootTables' => false, 'showRaffles' => true, 'showRecipes' => true])
         @else
-            @include('js._loot_js', ['showLootTables' => false, 'showRaffles' => false])
+            @include('js._loot_js', ['showLootTables' => false, 'showRaffles' => false, 'showRecipes' => false])
         @endif
         @include('js._character_select_js')
         @include('widgets._inventory_select_js', ['readOnly' => true])
         @include('widgets._bank_select_row', ['owners' => [Auth::user()]])
         @include('widgets._bank_select_js', [])
->>>>>>> upstream/develop
+        =======
+        @parent
+        @if (!$closed)
+            @if ($isClaim)
+                @include('js._loot_js', ['showLootTables' => false, 'showRaffles' => true])
+            @else
+                @include('js._loot_js', ['showLootTables' => false, 'showRaffles' => false])
+            @endif
+            @include('js._character_select_js')
+            @include('widgets._inventory_select_js', ['readOnly' => true])
+            @include('widgets._bank_select_row', ['owners' => [Auth::user()]])
+            @include('widgets._bank_select_js', [])
+            >>>>>>> upstream/develop
 
-        <script>
-            $(document).ready(function() {
-                var $submitButton = $('#submitButton');
-                var $confirmationModal = $('#confirmationModal');
-                var $formSubmit = $('#formSubmit');
-                var $submissionForm = $('#submissionForm');
+            <script>
+                $(document).ready(function() {
+                    var $submitButton = $('#submitButton');
+                    var $confirmationModal = $('#confirmationModal');
+                    var $formSubmit = $('#formSubmit');
+                    var $submissionForm = $('#submissionForm');
 
-                @if (!$isClaim)
-                    var $prompt = $('#prompt');
-                    var $rewards = $('#rewards');
+                    @if (!$isClaim)
+                        var $prompt = $('#prompt');
+                        var $rewards = $('#rewards');
 
-                    $prompt.selectize();
-                    $prompt.on('change', function(e) {
-                        $rewards.load('{{ url('submissions/new/prompt') }}/' + $(this).val());
-                    });
-                @endif
+                        $prompt.selectize();
+                        $prompt.on('change', function(e) {
+                            $rewards.load('{{ url('submissions/new/prompt') }}/' + $(this).val());
+                        });
+                    @endif
 
-                $submitButton.on('click', function(e) {
-                    e.preventDefault();
-                    $confirmationModal.modal('show');
-                });
-<<<<<<< HEAD
-            
-                var promptId = '{{ Request::get('prompt_id') }}'; 
-                $rewards.load('{{ url('submissions/new/prompt') }}/' + promptId);
-            @endif 
-=======
->>>>>>> upstream/develop
+                    $submitButton.on('click', function(e) {
+                        e.preventDefault();
+                        $confirmationModal.modal('show');
+                    }); <<
+                    << << < HEAD
+
+                    var promptId = '{{ Request::get('prompt_id') }}';
+                    $rewards.load('{{ url('submissions/new/prompt') }}/' + promptId);
+                @endif ===
+                === = >>>
+                >>> > upstream / develop
 
                 $formSubmit.on('click', function(e) {
                     e.preventDefault();
                     $submissionForm.submit();
                 });
-            });
-        </script>
-    @endif
-@endsection
+                });
+            </script>
+        @endif
+    @endsection
