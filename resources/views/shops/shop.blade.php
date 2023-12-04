@@ -1,13 +1,16 @@
 @extends('shops.layout')
 
-@section('shops-title') {{ $shop->name }} @endsection
+@section('shops-title')
+    {{ $shop->name }}
+@endsection
 
 @section('shops-content')
-{!! breadcrumbs(['Shops' => 'shops', $shop->name => $shop->url]) !!}
+    <x-admin-edit title="Shop" :object="$shop" />
+    {!! breadcrumbs(['Shops' => 'shops', $shop->name => $shop->url]) !!}
 
-<h1>
-    {{ $shop->name }}
-</h1>
+    <h1>
+        {{ $shop->name }}
+    </h1>
 
 @if($shop->use_coupons)
     <div class="alert alert-success">You can use coupons in this store!</div>
@@ -56,14 +59,13 @@
 @endsection
 
 @section('scripts')
-<script>
-    $(document).ready(function() {
-        $('.inventory-item').on('click', function(e) {
-            e.preventDefault();
+    <script>
+        $(document).ready(function() {
+            $('.inventory-item').on('click', function(e) {
+                e.preventDefault();
 
-            loadModal("{{ url('shops/'.$shop->id) }}/" + $(this).data('id'), 'Purchase Item');
+                loadModal("{{ url('shops/' . $shop->id) }}/" + $(this).data('id'), 'Purchase Item');
+            });
         });
-    });
-
-</script>
+    </script>
 @endsection
