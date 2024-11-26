@@ -156,7 +156,7 @@ class Item extends Model
      */
     public function scopeReleased($query)
     {
-        return $query->whereIn('id', UserItem::pluck('item_id')->toArray())->orWhere('is_released', 1);
+        return $query->whereIn('id', UserItem::distinct()->pluck('item_id'))->orWhere('is_released', 1);
     }
 
     /**********************************************************************************************

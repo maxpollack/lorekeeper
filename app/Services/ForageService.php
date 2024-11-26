@@ -34,7 +34,7 @@ class ForageService extends Service
         DB::beginTransaction();
 
         try {
-            
+
             // More specific validation
             foreach($data['rewardable_type'] as $key => $type)
             {
@@ -61,7 +61,7 @@ class ForageService extends Service
             $this->populateForage($table, array_only($data, ['rewardable_type', 'rewardable_id', 'quantity', 'weight']));
 
             return $this->commitReturn($table);
-        } catch(\Exception $e) { 
+        } catch(\Exception $e) {
             $this->setError('error', $e->getMessage());
         }
         return $this->rollbackReturn(false);
@@ -71,7 +71,7 @@ class ForageService extends Service
      * Updates a loot table.
      *
      * @param  \App\Models\Loot\Forage  $table
-     * @param  array                       $data 
+     * @param  array                       $data
      * @return bool|\App\Models\Loot\Forage
      */
     public function updateForage($table, $data)
@@ -79,7 +79,7 @@ class ForageService extends Service
         DB::beginTransaction();
 
         try {
-            
+
             // More specific validation
             foreach($data['rewardable_type'] as $key => $type)
             {
@@ -106,7 +106,7 @@ class ForageService extends Service
             $this->populateForage($table, array_only($data, ['rewardable_type', 'rewardable_id', 'quantity', 'weight']));
 
             return $this->commitReturn($table);
-        } catch(\Exception $e) { 
+        } catch(\Exception $e) {
             $this->setError('error', $e->getMessage());
         }
         return $this->rollbackReturn(false);
@@ -116,7 +116,7 @@ class ForageService extends Service
      * Handles the creation of loot for a loot table.
      *
      * @param  \App\Models\Loot\Forage  $table
-     * @param  array                       $data 
+     * @param  array                       $data
      */
     private function populateForage($table, $data)
     {
@@ -151,7 +151,7 @@ class ForageService extends Service
             $table->delete();
 
             return $this->commitReturn(true);
-        } catch(\Exception $e) { 
+        } catch(\Exception $e) {
             $this->setError('error', $e->getMessage());
         }
         return $this->rollbackReturn(false);
@@ -171,16 +171,16 @@ class ForageService extends Service
             }
 
             if($user->foraging->stamina < 1) throw new \Exception('You have exhausted yourself already! Come back tomorrow.');
-            
+
             $user->foraging->last_forage_id = $id; // set id so we can distribute after an hour
             $user->foraging->last_foraged_at = carbon::now(); // set time, this is useless and just for funsies
-            $user->foraging->distribute_at = carbon::now()->addMinutes(5); // set time to allow the user to claim, we can technically calculate this
+            $user->foraging->distribute_at = carbon::now(); // set time to allow the user to claim, we can technically calculate this
                                                                             // but i set it up like this so it's staying like this
             $user->foraging->stamina -= 1;
             $user->foraging->save();
 
             return $this->commitReturn(true);
-        } catch(\Exception $e) { 
+        } catch(\Exception $e) {
             $this->setError('error', $e->getMessage());
         }
         return $this->rollbackReturn(false);
@@ -214,7 +214,7 @@ class ForageService extends Service
             flash($this->getRewardsString($rewards))->success();
 
             return $this->commitReturn(true);
-        } catch(\Exception $e) { 
+        } catch(\Exception $e) {
             $this->setError('error', $e->getMessage());
         }
         return $this->rollbackReturn(false);
@@ -228,7 +228,7 @@ class ForageService extends Service
         $assets = createAssetsArray(false);
 
         addAsset($assets, $data, 1);
-                    
+
         return $assets;
     }
 
